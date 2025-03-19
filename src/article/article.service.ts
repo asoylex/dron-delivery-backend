@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { Article } from './entities/article.entity';
 
 @Injectable()
@@ -13,9 +13,18 @@ export class ArticleService {
   ) {}
 
   create(createArticleDto: CreateArticleDto) {
-    return (
-      'This action adds a new article {title: ' + createArticleDto'}'
-    );
+    const articleData: DeepPartial<Article> = {
+      ...createArticleDto,
+      product: typeof createArticleDto.product === 'number' 
+        ? { id: createArticleDto.product } 
+        : createArticleDto.product,
+      order: typeof createArticleDto.order === 'number' 
+        ? { id: createArticleDto.order } 
+        : createArticleDto.order,
+    };
+    
+    const newArticle = this.articleRepository.create(articleData);
+    return this.articleRepository.save(newArticle);
   }
 
   findAll() {
@@ -27,7 +36,17 @@ export class ArticleService {
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
-    return this.articleRepository.update(id, updateArticleDto);
+    const updateData: DeepPartial<Article> = {
+      ...updateArticleDto,
+      product: typeof updateArticleDto.product === 'number' 
+        ? { id: updateArticleDto.product } 
+        : updateArticleDto.product,
+      order: typeof updateArticleDto.order === 'number' 
+        ? { id: updateArticleDto.order } 
+        : updateArticleDto.order,
+    };
+    
+    return this.articleRepository.update(id, updateData);
   }
 
   remove(id: number) {
