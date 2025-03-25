@@ -15,14 +15,16 @@ export class ArticleService {
   create(createArticleDto: CreateArticleDto) {
     const articleData: DeepPartial<Article> = {
       ...createArticleDto,
-      product: typeof createArticleDto.product === 'number' 
-        ? { id: createArticleDto.product } 
-        : createArticleDto.product,
-      order: typeof createArticleDto.order === 'number' 
-        ? { id: createArticleDto.order } 
-        : createArticleDto.order,
+      product:
+        typeof createArticleDto.product === 'number'
+          ? { id: createArticleDto.product }
+          : createArticleDto.product,
+      order:
+        typeof createArticleDto.order === 'number'
+          ? { id: createArticleDto.order }
+          : createArticleDto.order,
     };
-    
+
     const newArticle = this.articleRepository.create(articleData);
     return this.articleRepository.save(newArticle);
   }
@@ -38,14 +40,16 @@ export class ArticleService {
   update(id: number, updateArticleDto: UpdateArticleDto) {
     const updateData: DeepPartial<Article> = {
       ...updateArticleDto,
-      product: typeof updateArticleDto.product === 'number' 
-        ? { id: updateArticleDto.product } 
-        : updateArticleDto.product,
-      order: typeof updateArticleDto.order === 'number' 
-        ? { id: updateArticleDto.order } 
-        : updateArticleDto.order,
+      product:
+        typeof updateArticleDto.product === 'number'
+          ? { id: updateArticleDto.product }
+          : updateArticleDto.product,
+      order:
+        typeof updateArticleDto.order === 'number'
+          ? { id: updateArticleDto.order }
+          : updateArticleDto.order,
     };
-    
+
     return this.articleRepository.update(id, updateData);
   }
 

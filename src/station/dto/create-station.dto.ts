@@ -1,1 +1,5 @@
-export class CreateStationDto {}
+export class CreateStationDto {
+  name: string;
+  lat: number;
+  long: number;
+}

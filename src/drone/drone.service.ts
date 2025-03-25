@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDroneDto } from './dto/create-drone.dto';
 import { UpdateDroneDto } from './dto/update-drone.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Drone } from './entities/drone.entity';
 
 @Injectable()
 export class DroneService {
+  constructor(
+    @InjectRepository(Drone)
+    private readonly droneRepository: Repository<Drone>,
+  ) {}
   create(createDroneDto: CreateDroneDto) {
-    return 'This action adds a new drone';
+    return this.droneRepository.save(createDroneDto);
   }
 
   findAll() {
-    return `This action returns all drone`;
+    return this.droneRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} drone`;
+    return this.droneRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateDroneDto: UpdateDroneDto) {
-    return `This action updates a #${id} drone`;
+    return this.droneRepository.update(id, updateDroneDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} drone`;
+    return this.droneRepository.delete(id);
   }
 }

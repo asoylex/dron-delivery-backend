@@ -14,6 +14,8 @@ import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
 import { ArticleModule } from './article/article.module';
 import { PaymentModule } from './payment/payment.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [
@@ -39,8 +41,9 @@ import { PaymentModule } from './payment/payment.module';
     ProductModule,
     ArticleModule,
     PaymentModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthService],
 })
 export class AppModule {}
