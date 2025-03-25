@@ -7,6 +7,4 @@ export class CreateClientDto {
   long?: number;
   enable?: boolean;
   credits?: number;
-  userId: number;
-  email: any;
 }

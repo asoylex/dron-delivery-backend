@@ -7,9 +7,9 @@ export class Station {
   @Column()
   name: string;
 
-  @Column({ type: 'decimal' })
+  @Column({ type: 'decimal', precision: 20, scale: 15 })
   lat: number;
 
-  @Column({ type: 'decimal' })
+  @Column({ type: 'decimal', precision: 20, scale: 15 })
   long: number;
 }

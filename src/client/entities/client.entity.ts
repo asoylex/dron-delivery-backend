@@ -24,10 +24,10 @@ export class Client {
   @Column({ nullable: true })
   address: string;
 
-  @Column({ type: 'decimal', nullable: true })
+  @Column({ type: 'decimal', precision: 20, scale: 15, nullable: true })
   lat: number;
 
-  @Column({ type: 'decimal', nullable: true })
+  @Column({ type: 'decimal', precision: 20, scale: 15, nullable: true })
   long: number;
 
   @Column({ default: true })

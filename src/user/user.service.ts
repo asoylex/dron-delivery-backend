@@ -12,8 +12,9 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
-  async create(createUserDto: CreateUserDto) {
-    const newUser = this.userRepository.create(createUserDto); // ¡El @BeforeInsert se encargará del hash!
+
+  create(createUserDto: CreateUserDto) {
+    const newUser = this.userRepository.create(createUserDto);
     return this.userRepository.save(newUser);
   }
 
@@ -33,10 +34,12 @@ export class UserService {
     return this.userRepository.delete(id);
   }
   async validateUser(email: string, password: string): Promise<User | null> {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: ['client', 'role'],
+    });
     if (!user) return null;
 
-    console.log(password, user.password);
     const isPasswordValid = await bcrypt.compare(password, user.password);
     return isPasswordValid ? user : null;
   }

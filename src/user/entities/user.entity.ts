@@ -4,9 +4,11 @@ import {
   Column,
   ManyToOne,
   BeforeInsert,
+  OneToOne,
 } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
 import * as bcrypt from 'bcrypt';
+import { Client } from '../../client/entities/client.entity';
 
 @Entity('users')
 export class User {
@@ -21,6 +23,12 @@ export class User {
 
   @ManyToOne(() => Role, (role) => role.users, { nullable: true })
   role: Role;
+
+  @OneToOne(() => Client, (client) => client.user, {
+    nullable: true,
+    eager: true,
+  })
+  client: Client;
 
   @BeforeInsert()
   async hashPassword() {
